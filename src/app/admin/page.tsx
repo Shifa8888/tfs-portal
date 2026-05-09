@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState, type ReactElement } from 'react';
 import { useRouter } from 'next/navigation';
@@ -300,7 +300,7 @@ export default function AdminDashboard() {
       <div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
           <h2 style={{ fontFamily: 'var(--font-cyber)', fontSize: '20px', color: 'var(--accent-primary)', letterSpacing: '3px' }}>
-            👨‍🎓 STUDENT MANAGEMENT
+            ðŸ‘¨â€ðŸŽ“ STUDENT MANAGEMENT
           </h2>
           <div style={{ position: 'relative' }}>
             <Search size={16} color="var(--accent-primary)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', opacity: 0.5 }} />
@@ -377,7 +377,7 @@ export default function AdminDashboard() {
       <div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
           <h2 style={{ fontFamily: 'var(--font-cyber)', fontSize: '20px', color: 'var(--accent-primary)', letterSpacing: '3px' }}>
-            📚 COURSE MANAGEMENT
+            ðŸ“š COURSE MANAGEMENT
           </h2>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -415,7 +415,7 @@ export default function AdminDashboard() {
                   </h3>
                 </div>
                 <div className="cyber-avatar" style={{ width: '36px', height: '36px', fontSize: '14px' }}>
-                  📖
+                  ðŸ“–
                 </div>
               </div>
               <p style={{
@@ -431,13 +431,13 @@ export default function AdminDashboard() {
               </p>
               <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
                 <span className="cyber-badge badge-info">
-                  👤 {course.instructor}
+                  ðŸ‘¤ {course.instructor}
                 </span>
                 <span className="cyber-badge badge-success">
-                  ⭐ {course.credits} Credits
+                  â­ {course.credits} Credits
                 </span>
                 <span className="cyber-badge badge-warning">
-                  🕐 {course.schedule}
+                  ðŸ• {course.schedule}
                 </span>
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
@@ -453,7 +453,7 @@ export default function AdminDashboard() {
         </div>
         {courses.length === 0 && (
           <div style={{ textAlign: 'center', padding: '60px' }}>
-            <p style={{ fontSize: '48px', marginBottom: '16px' }}>📚</p>
+            <p style={{ fontSize: '48px', marginBottom: '16px' }}>ðŸ“š</p>
             <p style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', opacity: 0.5 }}>
               No courses yet. Click "Add Course" to create one.
             </p>
@@ -466,7 +466,7 @@ export default function AdminDashboard() {
       <div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
           <h2 style={{ fontFamily: 'var(--font-cyber)', fontSize: '20px', color: 'var(--accent-primary)', letterSpacing: '3px' }}>
-            📢 ANNOUNCEMENTS
+            ðŸ“¢ ANNOUNCEMENTS
           </h2>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -519,7 +519,7 @@ export default function AdminDashboard() {
         </div>
         {announcements.length === 0 && (
           <div style={{ textAlign: 'center', padding: '60px' }}>
-            <p style={{ fontSize: '48px', marginBottom: '16px' }}>📢</p>
+            <p style={{ fontSize: '48px', marginBottom: '16px' }}>ðŸ“¢</p>
             <p style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', opacity: 0.5 }}>
               No announcements yet. Click "Post Announcement" to create one.
             </p>
@@ -531,13 +531,13 @@ export default function AdminDashboard() {
     settings: (
       <div>
         <h2 style={{ fontFamily: 'var(--font-cyber)', fontSize: '20px', color: 'var(--accent-primary)', letterSpacing: '3px', marginBottom: '24px' }}>
-          ⚙️ SYSTEM SETTINGS
+          âš™ï¸ SYSTEM SETTINGS
         </h2>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '20px' }}>
           <div className="cyber-card" style={{ padding: '24px' }}>
             <h3 style={{ fontFamily: 'var(--font-cyber)', fontSize: '14px', color: 'var(--accent-primary)', letterSpacing: '2px', marginBottom: '20px' }}>
-              🎨 THEME CONFIGURATION
+              ðŸŽ¨ THEME CONFIGURATION
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '12px' }}>
               {[
@@ -580,7 +580,7 @@ export default function AdminDashboard() {
 
           <div className="cyber-card" style={{ padding: '24px' }}>
             <h3 style={{ fontFamily: 'var(--font-cyber)', fontSize: '14px', color: 'var(--accent-primary)', letterSpacing: '2px', marginBottom: '20px' }}>
-              👤 ADMIN PROFILE
+              ðŸ‘¤ ADMIN PROFILE
             </h3>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
               <div className="cyber-avatar" style={{ width: '60px', height: '60px', fontSize: '24px' }}>
@@ -614,7 +614,7 @@ export default function AdminDashboard() {
 
         <div className="cyber-card" style={{ padding: '24px', marginTop: '20px' }}>
           <h3 style={{ fontFamily: 'var(--font-cyber)', fontSize: '14px', color: 'var(--accent-primary)', letterSpacing: '2px', marginBottom: '20px' }}>
-            📊 SYSTEM STATS
+            ðŸ“Š SYSTEM STATS
           </h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
             {[
@@ -727,50 +727,62 @@ export default function AdminDashboard() {
       {/* Modals */}
       <AnimatePresence>
         {showModal === 'course' && (
-          <div className="modal-overlay" onClick={() => setShowModal(null)}>
+          <div className="modal-overlay" onClick={() => setShowModal(null)} style={{ padding: '16px' }}>
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
               className="cyber-card"
-              style={{ padding: '32px', width: '100%', maxWidth: '500px', position: 'relative' }}
+              style={{ padding: '20px', width: '100%', maxWidth: '420px', position: 'relative', maxHeight: '90vh', overflowY: 'auto' }}
               onClick={e => e.stopPropagation()}
             >
-              <h3 style={{ fontFamily: 'var(--font-cyber)', fontSize: '16px', color: 'var(--accent-primary)', letterSpacing: '3px', marginBottom: '24px' }}>
-                ➕ CREATE NEW COURSE
-              </h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {/* Header */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                <h3 style={{ fontFamily: 'var(--font-cyber)', fontSize: '13px', color: 'var(--accent-primary)', letterSpacing: '2px', margin: 0 }}>
+                  âž• CREATE COURSE
+                </h3>
+                <button onClick={() => setShowModal(null)} style={{ background: 'rgba(255,0,64,0.15)', border: '1px solid rgba(255,0,64,0.3)', borderRadius: '6px', color: '#ff0040', cursor: 'pointer', padding: '4px 10px', fontSize: '16px', lineHeight: 1 }}>âœ•</button>
+              </div>
+
+              {/* Two-column grid for short fields */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
                 {['title', 'code', 'instructor', 'schedule'].map(field => (
-                  <div key={field}>
-                    <label style={{ fontFamily: 'var(--font-cyber)', fontSize: '10px', letterSpacing: '2px', color: 'var(--accent-primary)', marginBottom: '6px', display: 'block' }}>
+                  <div key={field} style={{ gridColumn: field === 'title' ? 'span 2' : 'span 1' }}>
+                    <label style={{ fontFamily: 'var(--font-cyber)', fontSize: '9px', letterSpacing: '2px', color: 'var(--accent-primary)', marginBottom: '4px', display: 'block' }}>
                       {field.toUpperCase()}
                     </label>
                     <input
                       className="cyber-input"
+                      style={{ padding: '8px 12px', fontSize: '13px' }}
                       value={(newCourse as any)[field]}
                       onChange={e => setNewCourse(prev => ({ ...prev, [field]: e.target.value }))}
                       placeholder={`Enter ${field}`}
                     />
                   </div>
                 ))}
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 80px', gap: '10px', marginBottom: '14px' }}>
                 <div>
-                  <label style={{ fontFamily: 'var(--font-cyber)', fontSize: '10px', letterSpacing: '2px', color: 'var(--accent-primary)', marginBottom: '6px', display: 'block' }}>
+                  <label style={{ fontFamily: 'var(--font-cyber)', fontSize: '9px', letterSpacing: '2px', color: 'var(--accent-primary)', marginBottom: '4px', display: 'block' }}>
                     DESCRIPTION
                   </label>
                   <textarea
                     className="cyber-input"
+                    style={{ padding: '8px 12px', fontSize: '13px', resize: 'none' }}
                     value={newCourse.description}
                     onChange={e => setNewCourse(prev => ({ ...prev, description: e.target.value }))}
                     placeholder="Course description"
-                    rows={3}
+                    rows={2}
                   />
                 </div>
                 <div>
-                  <label style={{ fontFamily: 'var(--font-cyber)', fontSize: '10px', letterSpacing: '2px', color: 'var(--accent-primary)', marginBottom: '6px', display: 'block' }}>
+                  <label style={{ fontFamily: 'var(--font-cyber)', fontSize: '9px', letterSpacing: '2px', color: 'var(--accent-primary)', marginBottom: '4px', display: 'block' }}>
                     CREDITS
                   </label>
                   <input
                     className="cyber-input"
+                    style={{ padding: '8px 12px', fontSize: '13px' }}
                     type="number"
                     value={newCourse.credits}
                     onChange={e => setNewCourse(prev => ({ ...prev, credits: parseInt(e.target.value) || 3 }))}
@@ -778,14 +790,20 @@ export default function AdminDashboard() {
                     max={6}
                   />
                 </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button onClick={() => setShowModal(null)} style={{ flex: 1, padding: '10px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--border-color)', borderRadius: '8px', color: 'var(--text-secondary)', cursor: 'pointer', fontFamily: 'var(--font-cyber)', fontSize: '11px', letterSpacing: '1px' }}>
+                  CANCEL
+                </button>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="cyber-btn"
                   onClick={handleCreateCourse}
-                  style={{ width: '100%' }}
+                  style={{ flex: 2, padding: '10px', fontSize: '11px' }}
                 >
-                  Create Course
+                  CREATE COURSE
                 </motion.button>
               </div>
             </motion.div>
@@ -793,36 +811,43 @@ export default function AdminDashboard() {
         )}
 
         {showModal === 'announcement' && (
-          <div className="modal-overlay" onClick={() => setShowModal(null)}>
+          <div className="modal-overlay" onClick={() => setShowModal(null)} style={{ padding: '16px' }}>
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
               className="cyber-card"
-              style={{ padding: '32px', width: '100%', maxWidth: '500px', position: 'relative' }}
+              style={{ padding: '20px', width: '100%', maxWidth: '400px', position: 'relative' }}
               onClick={e => e.stopPropagation()}
             >
-              <h3 style={{ fontFamily: 'var(--font-cyber)', fontSize: '16px', color: 'var(--accent-primary)', letterSpacing: '3px', marginBottom: '24px' }}>
-                📢 POST ANNOUNCEMENT
-              </h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {/* Header */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                <h3 style={{ fontFamily: 'var(--font-cyber)', fontSize: '13px', color: 'var(--accent-primary)', letterSpacing: '2px', margin: 0 }}>
+                  ðŸ“¢ POST ANNOUNCEMENT
+                </h3>
+                <button onClick={() => setShowModal(null)} style={{ background: 'rgba(255,0,64,0.15)', border: '1px solid rgba(255,0,64,0.3)', borderRadius: '6px', color: '#ff0040', cursor: 'pointer', padding: '4px 10px', fontSize: '16px', lineHeight: 1 }}>âœ•</button>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '14px' }}>
                 <div>
-                  <label style={{ fontFamily: 'var(--font-cyber)', fontSize: '10px', letterSpacing: '2px', color: 'var(--accent-primary)', marginBottom: '6px', display: 'block' }}>
+                  <label style={{ fontFamily: 'var(--font-cyber)', fontSize: '9px', letterSpacing: '2px', color: 'var(--accent-primary)', marginBottom: '4px', display: 'block' }}>
                     TITLE
                   </label>
                   <input
                     className="cyber-input"
+                    style={{ padding: '8px 12px', fontSize: '13px' }}
                     value={newAnnouncement.title}
                     onChange={e => setNewAnnouncement(prev => ({ ...prev, title: e.target.value }))}
                     placeholder="Announcement title"
                   />
                 </div>
                 <div>
-                  <label style={{ fontFamily: 'var(--font-cyber)', fontSize: '10px', letterSpacing: '2px', color: 'var(--accent-primary)', marginBottom: '6px', display: 'block' }}>
+                  <label style={{ fontFamily: 'var(--font-cyber)', fontSize: '9px', letterSpacing: '2px', color: 'var(--accent-primary)', marginBottom: '4px', display: 'block' }}>
                     PRIORITY
                   </label>
                   <select
                     className="cyber-input"
+                    style={{ padding: '8px 12px', fontSize: '13px' }}
                     value={newAnnouncement.priority}
                     onChange={e => setNewAnnouncement(prev => ({ ...prev, priority: e.target.value }))}
                   >
@@ -832,25 +857,32 @@ export default function AdminDashboard() {
                   </select>
                 </div>
                 <div>
-                  <label style={{ fontFamily: 'var(--font-cyber)', fontSize: '10px', letterSpacing: '2px', color: 'var(--accent-primary)', marginBottom: '6px', display: 'block' }}>
+                  <label style={{ fontFamily: 'var(--font-cyber)', fontSize: '9px', letterSpacing: '2px', color: 'var(--accent-primary)', marginBottom: '4px', display: 'block' }}>
                     CONTENT
                   </label>
                   <textarea
                     className="cyber-input"
+                    style={{ padding: '8px 12px', fontSize: '13px', resize: 'none' }}
                     value={newAnnouncement.content}
                     onChange={e => setNewAnnouncement(prev => ({ ...prev, content: e.target.value }))}
                     placeholder="Announcement content"
-                    rows={5}
+                    rows={3}
                   />
                 </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button onClick={() => setShowModal(null)} style={{ flex: 1, padding: '10px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--border-color)', borderRadius: '8px', color: 'var(--text-secondary)', cursor: 'pointer', fontFamily: 'var(--font-cyber)', fontSize: '11px', letterSpacing: '1px' }}>
+                  CANCEL
+                </button>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="cyber-btn"
                   onClick={handleCreateAnnouncement}
-                  style={{ width: '100%' }}
+                  style={{ flex: 2, padding: '10px', fontSize: '11px' }}
                 >
-                  Post Announcement
+                  POST NOW
                 </motion.button>
               </div>
             </motion.div>

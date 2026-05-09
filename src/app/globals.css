@@ -574,11 +574,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 16px;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .cyber-card {
     margin: 0 10px;
+  }
+  .modal-overlay > * {
+    max-height: 90vh;
+    overflow-y: auto;
   }
 }
