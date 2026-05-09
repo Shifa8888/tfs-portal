@@ -54,8 +54,8 @@ export default function LoginPage() {
 
   const quickLogin = async (type: 'admin' | 'student') => {
     if (type === 'admin') {
-      setEmail('Harry879@gmail.com');
-      setPassword('Harry900090');
+      setEmail('Harrypotter24321@gmail.com');
+      setPassword('Harry(890)');
       setActivePortal('admin');
     } else {
       // For student demo, use generic

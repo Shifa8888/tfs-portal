@@ -4,8 +4,8 @@ import { users, courses, announcements, enrollments } from '@/db/schema';
 import { db } from '@/db/index';
 import { eq } from 'drizzle-orm';
 
-const ADMIN_EMAIL = 'harry879@gmail.com';
-const ADMIN_PASSWORD = 'Harry900090';
+const ADMIN_EMAIL = 'Harrypotter24321@gmail.com';
+const ADMIN_PASSWORD = 'Harry(890)';
 
 export async function loginUser(email: string, password: string) {
   try {
