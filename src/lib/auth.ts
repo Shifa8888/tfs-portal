@@ -1,149 +1,212 @@
 'use server';
 
-import { users, courses, announcements, enrollments } from '@/db/schema';
-import { db } from '@/db/index';
-import { eq } from 'drizzle-orm';
-
+// ─── Hardcoded credentials (no database needed) ───────────────────────────────
 const ADMIN_EMAIL = 'Harrypotter24321@gmail.com';
 const ADMIN_PASSWORD = 'Harry(890)';
 
+// In-memory store for students, courses, announcements (resets on server restart)
+// For a persistent no-DB solution, data lives here during the session.
+const inMemoryStudents: User[] = [];
+const inMemoryCourses: Course[] = [
+  { id: 1, title: 'Introduction to Computer Science', code: 'CS101', description: 'Fundamentals of programming and computer science.', instructor: 'Dr. Smith', schedule: 'Monday/Wednesday 9:00 AM', credits: 3, createdAt: new Date() },
+  { id: 2, title: 'Mathematics for Engineers', code: 'MATH201', description: 'Calculus, linear algebra and differential equations.', instructor: 'Dr. Khan', schedule: 'Tuesday/Thursday 11:00 AM', credits: 4, createdAt: new Date() },
+  { id: 3, title: 'Physics I', code: 'PHY101', description: 'Mechanics, thermodynamics and waves.', instructor: 'Dr. Ali', schedule: 'Monday/Wednesday/Friday 10:00 AM', credits: 3, createdAt: new Date() },
+];
+const inMemoryAnnouncements: Announcement[] = [
+  { id: 1, title: 'Welcome to Academy TSF!', content: 'Welcome to the new semester. Please check your course schedules.', authorId: 1, priority: 'high', createdAt: new Date() },
+  { id: 2, title: 'Mid-term Exams Schedule', content: 'Mid-term exams will be held from next week. Prepare accordingly.', authorId: 1, priority: 'normal', createdAt: new Date() },
+];
+const inMemoryEnrollments: Enrollment[] = [];
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  role: 'admin' | 'student';
+  createdAt: Date;
+}
+
+interface Course {
+  id: number;
+  title: string;
+  code: string;
+  description: string;
+  instructor: string;
+  schedule: string;
+  credits: number;
+  createdAt: Date;
+}
+
+interface Announcement {
+  id: number;
+  title: string;
+  content: string;
+  authorId: number;
+  priority: string;
+  createdAt: Date;
+}
+
+interface Enrollment {
+  id: number;
+  userId: number;
+  courseId: number;
+  grade: string;
+  status: string;
+  createdAt: Date;
+}
+
+// ─── Auth ─────────────────────────────────────────────────────────────────────
+
 export async function loginUser(email: string, password: string) {
-  try {
-    if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase() && password === ADMIN_PASSWORD) {
-      const existingAdmin = await db.select().from(users).where(eq(users.email, ADMIN_EMAIL));
-      if (existingAdmin.length === 0) {
-        await db.insert(users).values({
-          name: 'Harry - Admin',
-          email: ADMIN_EMAIL,
-          password: ADMIN_PASSWORD,
-          role: 'admin',
-        });
-      }
-      return {
-        success: true,
-        user: { id: existingAdmin[0]?.id || 1, name: 'Harry - Admin', email: ADMIN_EMAIL, role: 'admin' as const },
-      };
-    }
-
-    const user = await db.select().from(users).where(eq(users.email, email.toLowerCase()));
-    if (user.length === 0 || user[0].password !== password) {
-      return { success: false, message: 'Invalid email or password' };
-    }
-
+  // Admin login
+  if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase() && password === ADMIN_PASSWORD) {
     return {
       success: true,
-      user: { id: user[0].id, name: user[0].name, email: user[0].email, role: user[0].role as 'admin' | 'student' },
+      user: { id: 1, name: 'Harry - Admin', email: ADMIN_EMAIL, role: 'admin' as const },
     };
-  } catch {
-    return { success: false, message: 'Login failed. Please try again.' };
   }
+
+  // Student login
+  const student = inMemoryStudents.find(
+    u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+  );
+
+  if (!student) {
+    return { success: false, message: 'Invalid email or password' };
+  }
+
+  return {
+    success: true,
+    user: { id: student.id, name: student.name, email: student.email, role: 'student' as const },
+  };
 }
 
 export async function registerUser(name: string, email: string, password: string) {
-  try {
-    const existing = await db.select().from(users).where(eq(users.email, email.toLowerCase()));
-    if (existing.length > 0) return { success: false, message: 'Email already registered' };
-    await db.insert(users).values({ name, email: email.toLowerCase(), password, role: 'student' });
-    return { success: true, message: 'Registration successful' };
-  } catch {
-    return { success: false, message: 'Registration failed' };
-  }
+  const existing = inMemoryStudents.find(u => u.email.toLowerCase() === email.toLowerCase());
+  if (existing) return { success: false, message: 'Email already registered' };
+
+  const newUser: User = {
+    id: inMemoryStudents.length + 100,
+    name,
+    email: email.toLowerCase(),
+    password,
+    role: 'student',
+    createdAt: new Date(),
+  };
+  inMemoryStudents.push(newUser);
+  return { success: true, message: 'Registration successful' };
 }
+
+// ─── Users ────────────────────────────────────────────────────────────────────
 
 export async function getAllUsers() {
-  try {
-    const result = await db.select().from(users).where(eq(users.role, 'student'));
-    return { success: true, users: result };
-  } catch {
-    return { success: false, message: 'Failed to fetch users' };
-  }
+  return {
+    success: true,
+    users: inMemoryStudents.map(u => ({
+      id: u.id,
+      name: u.name,
+      email: u.email,
+      role: u.role,
+      createdAt: u.createdAt,
+    })),
+  };
 }
+
+// ─── Courses ──────────────────────────────────────────────────────────────────
 
 export async function getAllCourses() {
-  try {
-    const result = await db.select().from(courses);
-    return { success: true, courses: result };
-  } catch {
-    return { success: false, message: 'Failed to fetch courses' };
-  }
+  return { success: true, courses: inMemoryCourses };
 }
 
-export async function createCourse(course: { title: string; code: string; description: string; instructor: string; schedule: string; credits: number }) {
-  try {
-    await db.insert(courses).values(course);
-    return { success: true, message: 'Course created' };
-  } catch {
-    return { success: false, message: 'Failed to create course' };
-  }
+export async function createCourse(course: {
+  title: string;
+  code: string;
+  description: string;
+  instructor: string;
+  schedule: string;
+  credits: number;
+}) {
+  const newCourse: Course = {
+    id: inMemoryCourses.length + 1,
+    ...course,
+    createdAt: new Date(),
+  };
+  inMemoryCourses.push(newCourse);
+  return { success: true, message: 'Course created' };
 }
 
-export async function createAnnouncement(data: { title: string; content: string; authorId: number; priority: string }) {
-  try {
-    await db.insert(announcements).values(data);
-    return { success: true, message: 'Announcement created' };
-  } catch {
-    return { success: false, message: 'Failed to create announcement' };
-  }
-}
+// ─── Announcements ────────────────────────────────────────────────────────────
 
 export async function getAnnouncements() {
-  try {
-    const result = await db.select().from(announcements).orderBy(announcements.createdAt);
-    return { success: true, announcements: result };
-  } catch {
-    return { success: false, message: 'Failed to fetch announcements' };
-  }
+  return { success: true, announcements: [...inMemoryAnnouncements].reverse() };
 }
 
+export async function createAnnouncement(data: {
+  title: string;
+  content: string;
+  authorId: number;
+  priority: string;
+}) {
+  const newAnn: Announcement = {
+    id: inMemoryAnnouncements.length + 1,
+    ...data,
+    createdAt: new Date(),
+  };
+  inMemoryAnnouncements.push(newAnn);
+  return { success: true, message: 'Announcement created' };
+}
+
+// ─── Enrollments ──────────────────────────────────────────────────────────────
+
 export async function enrollStudent(userId: number, courseId: number) {
-  try {
-    await db.insert(enrollments).values({ userId, courseId, status: 'enrolled' });
-    return { success: true, message: 'Student enrolled' };
-  } catch {
-    return { success: false, message: 'Failed to enroll student' };
-  }
+  const already = inMemoryEnrollments.find(e => e.userId === userId && e.courseId === courseId);
+  if (already) return { success: false, message: 'Already enrolled' };
+
+  inMemoryEnrollments.push({
+    id: inMemoryEnrollments.length + 1,
+    userId,
+    courseId,
+    grade: '',
+    status: 'enrolled',
+    createdAt: new Date(),
+  });
+  return { success: true, message: 'Enrolled successfully' };
 }
 
 export async function getStudentEnrollments(userId: number) {
-  try {
-    const result = await db
-      .select({
-        id: enrollments.id,
-        grade: enrollments.grade,
-        status: enrollments.status,
-        courseTitle: courses.title,
-        courseCode: courses.code,
-        courseInstructor: courses.instructor,
-        courseSchedule: courses.schedule,
-        courseCredits: courses.credits,
-        courseDescription: courses.description,
-      })
-      .from(enrollments)
-      .leftJoin(courses, eq(enrollments.courseId, courses.id))
-      .where(eq(enrollments.userId, userId));
-    return { success: true, enrollments: result };
-  } catch {
-    return { success: false, message: 'Failed to fetch enrollments' };
-  }
+  const result = inMemoryEnrollments
+    .filter(e => e.userId === userId)
+    .map(e => {
+      const course = inMemoryCourses.find(c => c.id === e.courseId);
+      return {
+        id: e.id,
+        grade: e.grade || null,
+        status: e.status,
+        courseTitle: course?.title || null,
+        courseCode: course?.code || null,
+        courseInstructor: course?.instructor || null,
+        courseSchedule: course?.schedule || null,
+        courseCredits: course?.credits || null,
+        courseDescription: course?.description || null,
+      };
+    });
+  return { success: true, enrollments: result };
 }
 
 export async function getAllEnrollments() {
-  try {
-    const result = await db
-      .select({
-        id: enrollments.id,
-        grade: enrollments.grade,
-        status: enrollments.status,
-        userName: users.name,
-        userEmail: users.email,
-        courseTitle: courses.title,
-        courseCode: courses.code,
-      })
-      .from(enrollments)
-      .leftJoin(users, eq(enrollments.userId, users.id))
-      .leftJoin(courses, eq(enrollments.courseId, courses.id));
-    return { success: true, enrollments: result };
-  } catch {
-    return { success: false, message: 'Failed to fetch enrollments' };
-  }
+  const result = inMemoryEnrollments.map(e => {
+    const student = inMemoryStudents.find(u => u.id === e.userId);
+    const course = inMemoryCourses.find(c => c.id === e.courseId);
+    return {
+      id: e.id,
+      grade: e.grade || null,
+      status: e.status,
+      userName: student?.name || null,
+      userEmail: student?.email || null,
+      courseTitle: course?.title || null,
+      courseCode: course?.code || null,
+    };
+  });
+  return { success: true, enrollments: result };
 }
